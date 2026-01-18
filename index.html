@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Los Andres - An open-world Roblox experience by Team Shadow Headquarters">
+    <title>Los Andres | Roblox Game</title>
+    
+    <!-- Stable Tailwind CSS v3 -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        red: {
+                            600: '#dc2626',
+                            700: '#b91c1c',
+                        },
+                        zinc: {
+                            900: '#18181b',
+                            950: '#09090b',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* Base Styles */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #000000;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #000;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #dc2626;
+        }
+
+        /* Animations */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .delay-100 { transition-delay: 100ms; }
+        .delay-200 { transition-delay: 200ms; }
+        .delay-300 { transition-delay: 300ms; }
+
+        /* Grid Background Pattern */
+        .bg-grid {
+            background-size: 40px 40px;
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+            mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+        }
+
+        /* Glass Effect */
+        .glass-nav {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 glass-nav transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center gap-3">
+                    <div class="w-10 h-10 bg-red-600 rounded-lg flex items-center justify-center font-bold text-xl">LA</div>
+                    <span class="font-bold text-xl tracking-tight">LOS ANDRES</span>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="#home" class="hover:text-red-500 transition-colors px-3 py-2 rounded-md text-sm font-medium">Home</a>
+                        <a href="#about" class="hover:text-red-500 transition-colors px-3 py-2 rounded-md text-sm font-medium">About</a>
+                        <a href="#features" class="hover:text-red-500 transition-colors px-3 py-2 rounded-md text-sm font-medium">Features</a>
+                        <a href="#gallery" class="hover:text-red-500 transition-colors px-3 py-2 rounded-md text-sm font-medium">Gallery</a>
+                        <a href="https://www.roblox.com" target="_blank" class="bg-red-600 hover:bg-red-700 text-white px-5 py-2.5 rounded-lg text-sm font-bold transition-transform transform hover:scale-105">Play Now</a>
+                    </div>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-zinc-800 focus:outline-none">
+                        <span class="sr-only">Open main menu</span>
+                        <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div class="md:hidden hidden bg-black border-b border-zinc-800" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#home" class="text-gray-300 hover:text-white hover:bg-zinc-800 block px-3 py-2 rounded-md text-base font-medium">Home</a>
+                <a href="#about" class="text-gray-300 hover:text-white hover:bg-zinc-800 block px-3 py-2 rounded-md text-base font-medium">About</a>
+                <a href="#features" class="text-gray-300 hover:text-white hover:bg-zinc-800 block px-3 py-2 rounded-md text-base font-medium">Features</a>
+                <a href="#gallery" class="text-gray-300 hover:text-white hover:bg-zinc-800 block px-3 py-2 rounded-md text-base font-medium">Gallery</a>
+                <a href="https://www.roblox.com" class="bg-red-600 text-white block px-3 py-3 rounded-md text-base font-bold text-center mt-4">Play on Roblox</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
+        <!-- Background Grid -->
+        <div class="absolute inset-0 bg-grid z-0"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent z-0"></div>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="fade-up">
+                <span class="inline-block py-1 px-3 rounded-full bg-zinc-900 border border-zinc-800 text-sm font-medium text-gray-400 mb-6">
+                    Available now on <span class="text-white font-bold">ROBLOX</span>
+                </span>
+                <h1 class="text-5xl sm:text-7xl lg:text-8xl font-extrabold tracking-tight mb-6">
+                    LOS <span class="text-red-600">ANDRES</span>
+                </h1>
+                <p class="mt-4 text-xl text-gray-400 max-w-2xl mx-auto mb-10 leading-relaxed">
+                    Build your empire. Defend your turf. Rise to the top in the ultimate open-world roleplay experience.
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <a href="https://www.roblox.com" target="_blank" class="flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 text-white px-8 py-4 rounded-xl text-lg font-bold transition-all hover:scale-105 shadow-lg shadow-red-900/20">
+                        <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M5.164 0L0 18.627l18.836 5.373L24 5.373 5.164 0zM9.88 14.469l-2.832-.81.81-2.832 2.832.81-.81 2.832z"/>
+                        </svg>
+                        Play Now
+                    </a>
+                    <a href="#about" class="flex items-center justify-center gap-2 bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 text-white px-8 py-4 rounded-xl text-lg font-medium transition-all">
+                        Learn More
+                    </a>
+                </div>
+            </div>
+
+            <!-- Stats -->
+            <div class="fade-up delay-200 mt-20 grid grid-cols-2 md:grid-cols-4 gap-8 border-t border-zinc-800 pt-10">
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-white">50K+</div>
+                    <div class="text-sm text-gray-500 mt-1">Daily Players</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-red-500">92%</div>
+                    <div class="text-sm text-gray-500 mt-1">Rating</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-white">200+</div>
+                    <div class="text-sm text-gray-500 mt-1">Vehicles</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-white">Free</div>
+                    <div class="text-sm text-gray-500 mt-1">To Play</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-24 bg-black relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div class="fade-up relative">
+                    <div class="absolute -inset-4 bg-red-600/20 blur-3xl rounded-full opacity-20"></div>
+                    <div class="relative bg-zinc-900 border border-zinc-800 rounded-2xl aspect-video overflow-hidden shadow-2xl shadow-red-900/10 group">
+                        <video class="w-full h-full object-cover" controls playsinline preload="metadata">
+                            <source src="trailer.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                </div>
+                
+                <div class="fade-up delay-100">
+                    <h2 class="text-red-600 font-bold uppercase tracking-wider text-sm mb-2">About The Game</h2>
+                    <h3 class="text-4xl font-bold text-white mb-6">Welcome to Los Andres</h3>
+                    <p class="text-gray-400 text-lg leading-relaxed mb-6">
+                        Experience the most immersive open-world city on Roblox. In Los Andres, every choice matters. Will you enforce the law, run the underground, or build a legitimate business empire?
+                    </p>
+                    <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <svg class="w-6 h-6 text-red-600 mr-3 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <span class="text-gray-300">Huge open world map inspired by real cities</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-6 h-6 text-red-600 mr-3 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <span class="text-gray-300">Complete freedom to choose your role</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-6 h-6 text-red-600 mr-3 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <span class="text-gray-300">Regular weekly updates with new content</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-24 bg-zinc-950">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16 fade-up">
+                <h2 class="text-red-600 font-bold uppercase tracking-wider text-sm mb-2">Features</h2>
+                <h3 class="text-4xl font-bold text-white">Dominate The City</h3>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="fade-up bg-black border border-zinc-800 p-8 rounded-2xl hover:border-red-600/50 transition-colors group">
+                    <div class="w-12 h-12 bg-zinc-900 rounded-lg flex items-center justify-center mb-6 group-hover:bg-red-600 transition-colors">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+                    </div>
+                    <h4 class="text-xl font-bold text-white mb-3">Real Estate</h4>
+                    <p class="text-gray-400">Buy and furnish luxury apartments, houses, and penthouses across the city.</p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="fade-up delay-100 bg-black border border-zinc-800 p-8 rounded-2xl hover:border-red-600/50 transition-colors group">
+                    <div class="w-12 h-12 bg-zinc-900 rounded-lg flex items-center justify-center mb-6 group-hover:bg-red-600 transition-colors">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                    </div>
+                    <h4 class="text-xl font-bold text-white mb-3">Action Combat</h4>
+                    <p class="text-gray-400">Advanced weapon systems and combat mechanics for thrilling turf wars.</p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="fade-up delay-200 bg-black border border-zinc-800 p-8 rounded-2xl hover:border-red-600/50 transition-colors group">
+                    <div class="w-12 h-12 bg-zinc-900 rounded-lg flex items-center justify-center mb-6 group-hover:bg-red-600 transition-colors">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </div>
+                    <h4 class="text-xl font-bold text-white mb-3">Jobs & Careers</h4>
+                    <p class="text-gray-400">Work as police, medic, mechanic, or run your own business to earn cash.</p>
+                </div>
+
+                <!-- Feature 4 -->
+                <div class="fade-up bg-black border border-zinc-800 p-8 rounded-2xl hover:border-red-600/50 transition-colors group">
+                    <div class="w-12 h-12 bg-zinc-900 rounded-lg flex items-center justify-center mb-6 group-hover:bg-red-600 transition-colors">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                    </div>
+                    <h4 class="text-xl font-bold text-white mb-3">Factions</h4>
+                    <p class="text-gray-400">Join official factions or create your own crew to rule the streets.</p>
+                </div>
+
+                <!-- Feature 5 -->
+                <div class="fade-up delay-100 bg-black border border-zinc-800 p-8 rounded-2xl hover:border-red-600/50 transition-colors group">
+                    <div class="w-12 h-12 bg-zinc-900 rounded-lg flex items-center justify-center mb-6 group-hover:bg-red-600 transition-colors">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0"></path></svg>
+                    </div>
+                    <h4 class="text-xl font-bold text-white mb-3">Custom Vehicles</h4>
+                    <p class="text-gray-400">Collect, upgrade, and customize over 200 unique vehicles.</p>
+                </div>
+
+                <!-- Feature 6 -->
+                <div class="fade-up delay-200 bg-black border border-zinc-800 p-8 rounded-2xl hover:border-red-600/50 transition-colors group">
+                    <div class="w-12 h-12 bg-zinc-900 rounded-lg flex items-center justify-center mb-6 group-hover:bg-red-600 transition-colors">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z"></path></svg>
+                    </div>
+                    <h4 class="text-xl font-bold text-white mb-3">Character Creator</h4>
+                    <p class="text-gray-400">Extensive character customization to make your avatar truly unique.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="py-24 bg-black">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16 fade-up">
+                <h2 class="text-red-600 font-bold uppercase tracking-wider text-sm mb-2">Gallery</h2>
+                <h3 class="text-4xl font-bold text-white">City Views</h3>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Gallery Item 1 -->
+                <div class="fade-up bg-zinc-900 rounded-xl overflow-hidden aspect-video relative group border border-zinc-800">
+                    <div class="absolute inset-0 flex items-center justify-center bg-zinc-900">
+                        <span class="text-zinc-600 font-medium">Downtown</span>
+                    </div>
+                </div>
+                
+                <!-- Gallery Item 2 -->
+                <div class="fade-up delay-100 bg-zinc-900 rounded-xl overflow-hidden aspect-video relative group border border-zinc-800">
+                    <div class="absolute inset-0 flex items-center justify-center bg-zinc-900">
+                        <span class="text-zinc-600 font-medium">Suburbs</span>
+                    </div>
+                </div>
+
+                <!-- Gallery Item 3 -->
+                <div class="fade-up delay-200 bg-zinc-900 rounded-xl overflow-hidden aspect-video relative group border border-zinc-800">
+                    <div class="absolute inset-0 flex items-center justify-center bg-zinc-900">
+                        <span class="text-zinc-600 font-medium">Industrial</span>
+                    </div>
+                </div>
+
+                <!-- Gallery Item 4 -->
+                <div class="fade-up bg-zinc-900 rounded-xl overflow-hidden aspect-video relative group border border-zinc-800">
+                    <div class="absolute inset-0 flex items-center justify-center bg-zinc-900">
+                        <span class="text-zinc-600 font-medium">Beachfront</span>
+                    </div>
+                </div>
+
+                <!-- Gallery Item 5 -->
+                <div class="fade-up delay-100 bg-zinc-900 rounded-xl overflow-hidden aspect-video relative group border border-zinc-800">
+                    <div class="absolute inset-0 flex items-center justify-center bg-zinc-900">
+                        <span class="text-zinc-600 font-medium">Casino</span>
+                    </div>
+                </div>
+
+                <!-- Gallery Item 6 -->
+                <div class="fade-up delay-200 bg-zinc-900 rounded-xl overflow-hidden aspect-video relative group border border-zinc-800">
+                    <div class="absolute inset-0 flex items-center justify-center bg-zinc-900">
+                        <span class="text-zinc-600 font-medium">Race Track</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-zinc-950 border-t border-zinc-800 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 bg-red-600 rounded flex items-center justify-center font-bold text-sm">LA</div>
+                    <p class="text-gray-400 text-sm">© 2024 Team Shadow Headquarters</p>
+                </div>
+                
+                <div class="flex gap-6">
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">Twitter</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">Discord</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">YouTube</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">Roblox Group</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Mobile Menu Toggle
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu on link click
+        menu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                menu.classList.add('hidden');
+            });
+        });
+
+        // Intersection Observer for Animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-up').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Navbar Scroll Effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('shadow-lg');
+            } else {
+                navbar.classList.remove('shadow-lg');
+            }
+        });
+    </script>
+</body>
+</html>
