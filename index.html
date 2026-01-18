@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Los Andres - An open-world Roblox experience by Team Shadow Headquarters">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+    <link rel="icon" type="image/png" href="logo.png">
     <title>Los Andres | Roblox Game</title>
     
     <!-- Stable Tailwind CSS v3 -->
@@ -44,6 +48,20 @@
             background-color: #000000;
             color: #ffffff;
             overflow-x: hidden;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        /* Prevent image dragging */
+        img {
+            -webkit-user-drag: none;
+            -khtml-user-drag: none;
+            -moz-user-drag: none;
+            -o-user-drag: none;
+            user-drag: none;
+            pointer-events: none;
         }
 
         /* Custom Scrollbar */
@@ -423,6 +441,23 @@
                 navbar.classList.remove('shadow-lg');
             }
         });
+
+        // Security Features
+        document.addEventListener('contextmenu', event => event.preventDefault());
+        
+        document.addEventListener('keydown', event => {
+            // Prevent F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U, Ctrl+S, Ctrl+P, Ctrl+C
+            if (event.key === 'F12' || 
+                (event.ctrlKey && event.shiftKey && (event.key === 'I' || event.key === 'J')) || 
+                (event.ctrlKey && event.key === 'U') ||
+                (event.ctrlKey && event.key === 'S') ||
+                (event.ctrlKey && event.key === 'P') ||
+                (event.ctrlKey && event.key === 'C')) {
+                event.preventDefault();
+            }
+        });
+
+        document.addEventListener('dragstart', event => event.preventDefault());
     </script>
 </body>
 </html>
