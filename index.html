@@ -103,7 +103,7 @@
             <div class="flex items-center justify-between h-20">
                 <!-- Logo -->
                 <div class="flex-shrink-0 flex items-center gap-3">
-                    <div class="w-10 h-10 bg-red-600 rounded-lg flex items-center justify-center font-bold text-xl">LA</div>
+                    <img src="logo.png" alt="Los Andres Logo" class="w-10 h-10 object-contain">
                     <span class="font-bold text-xl tracking-tight">LOS ANDRES</span>
                 </div>
 
@@ -144,8 +144,17 @@
 
     <!-- Hero Section -->
     <section id="home" class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
-        <!-- Background Grid -->
-        <div class="absolute inset-0 bg-grid z-0"></div>
+        <!-- Background Video -->
+        <div class="absolute inset-0 overflow-hidden z-0">
+            <div class="absolute inset-0 bg-black/60 z-10"></div>
+            <iframe 
+                class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[177.78vh] min-w-full min-h-full aspect-video opacity-50 pointer-events-none"
+                src="https://www.youtube.com/embed/VQRLujxTm3c?autoplay=1&mute=1&controls=0&loop=1&playlist=VQRLujxTm3c&playsinline=1&showinfo=0&rel=0&iv_load_policy=3&disablekb=1" 
+                frameborder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowfullscreen>
+            </iframe>
+        </div>
         <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent z-0"></div>
 
         <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -355,7 +364,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex flex-col md:flex-row justify-between items-center gap-6">
                 <div class="flex items-center gap-3">
-                    <div class="w-8 h-8 bg-red-600 rounded flex items-center justify-center font-bold text-sm">LA</div>
+                    <img src="logo.png" alt="Los Andres Logo" class="w-8 h-8 object-contain">
                     <p class="text-gray-400 text-sm">© 2025 Team Shadow Headquarters</p>
                 </div>
                 
@@ -363,7 +372,7 @@
                     <a href="#" class="text-gray-400 hover:text-white transition-colors">Twitter</a>
                     <a href="#" class="text-gray-400 hover:text-white transition-colors">Discord</a>
                     <a href="#" class="text-gray-400 hover:text-white transition-colors">YouTube</a>
-                    <a href="#" class="text-gray-400 hover:text-white transition-colors">Roblox Group</a>
+                    <a href="https://www.roblox.com/communities/295489600/Team-Shadow-Headquarters#!/about" target="_blank" class="text-gray-400 hover:text-white transition-colors">Roblox Group</a>
                 </div>
             </div>
         </div>
